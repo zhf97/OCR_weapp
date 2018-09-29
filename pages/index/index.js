@@ -31,7 +31,7 @@ Page({
     var that=this;
     time=Date.now();
     wx.uploadFile({
-      url: 'https://recognition.image.myqcloud.com/ocr/handwriting', //仅为示例，非真实的接口地址 
+      url: 'https://recognition.image.myqcloud.com/ocr/handwriting', 
       filePath: this.data.tempFilePaths[0],
       name: 'image',
       header:{
@@ -50,15 +50,22 @@ Page({
   },
   display(data){
     var result = JSON.parse(data);
-    var out ="识别到了：\n";
-    for(var i=0;i<result.data.items.length;i++)
+    if(result.code!=0)
     {
-      out=out+'['+i+']'+' '+result.data.items[i].itemstring+'\n';
+      wx.showModal({'title':'错误','content':'服务暂不可用\ncode:'+result.code+'\nmsg:'+result.message,'showCancel':false});
     }
-    var last = Date.now() - time;
-    this.setData({ time:' 用时:'+last+'ms'});
-    console.log(result);
-    this.setData({ "resultstring": out});
+    else
+    {
+      var out ="识别到了：\n";
+      for(var i=0;i<result.data.items.length;i++)
+      {
+        out=out+'['+i+']'+' '+result.data.items[i].itemstring+'\n';
+      }
+      var last = Date.now() - time;
+      this.setData({ time:' 用时:'+last+'ms'});
+      console.log(result);
+      this.setData({ "resultstring": out});
+    }
   }
 
 });
