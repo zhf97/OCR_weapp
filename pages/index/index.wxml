@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<image mode='widthFix' src="{{tempFilePaths}}"></image>
+<view class="button-sp-area">
+<button class="weui-btn" type="primary" plain="true" bindtap="chooseimage">拍照识别</button> 
+<button class="weui-btn" type="primary" plain="true" bindtap="submitimg">提交</button>
+</view>
+<text>{{resultstring}}{{time}}</text>
